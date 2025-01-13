@@ -37,6 +37,8 @@ jobs:
           curl -sL "https://github.com/google/go-containerregistry/releases/download/${VERSION}/go-containerregistry_${OS}_${ARCH}.tar.gz" | tar -xzf -
           echo "ls"
           ls -l
+          # This directory is in PATH
+          mkdir -p $HOME/.local/bin
           mv crane $HOME/.local/bin
         env:
           VERSION: v0.20.2
