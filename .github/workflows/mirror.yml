@@ -32,9 +32,8 @@ jobs:
 
       - name: Install crane
         run: |
-          mkdir -p $HOME/bin
-          curl -sL "https://github.com/google/go-containerregistry/releases/download/${VERSION}/go-containerregistry_${OS}_${ARCH}.tar.gz" | tar -C $HOME/bin -xzf -
-          PATH=${PATH}:$HOME/bin
+          curl -sL "https://github.com/google/go-containerregistry/releases/download/${VERSION}/go-containerregistry_${OS}_${ARCH}.tar.gz" | tar -xzf -
+          mv crane $HOME/.local/bin
         env:
           VERSION: v0.20.2
           OS: Linux
@@ -42,8 +41,6 @@ jobs:
 
       - name: Mirror
         run: |
-          echo $PATH
-          ls -l $HOME/bin
           for tag in $(cat ./images/${{ matrix.image }}); do
             crane copy \
               docker.io/${{ matrix.image }}:$tag \
