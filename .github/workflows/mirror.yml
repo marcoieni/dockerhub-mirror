@@ -32,11 +32,7 @@ jobs:
 
       - name: Install crane
         run: |
-          tmp=$(mktemp -d)
-          cd ${tmp}
-          curl -sL "https://github.com/google/go-containerregistry/releases/download/${VERSION}/go-containerregistry_${OS}_${ARCH}.tar.gz" | tar xz
-
-          curl -fsL https://github.com/google/go-containerregistry/releases/download/${tag}/go-containerregistry_${os}_${arch}.tar.gz | tar xz /usr/local/bin/crane
+          curl -sL "https://github.com/google/go-containerregistry/releases/download/${VERSION}/go-containerregistry_${OS}_${ARCH}.tar.gz" | tar xz /usr/local/bin/crane
         env:
           VERSION: v0.20.2
           OS: Linux
