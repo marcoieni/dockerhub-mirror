@@ -13,9 +13,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # - image: centos
+          - image: centos
           - image: node
-          # - image: ubuntu
+          - image: ubuntu
     permissions:
       contents: read
       packages: write
