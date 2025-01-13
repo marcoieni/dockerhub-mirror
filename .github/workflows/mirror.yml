@@ -30,16 +30,10 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ github.token }}
 
-      - name: Install crane
+      - name: Download crane
         run: |
-          echo "ls"
-          ls -l
+          # Download crane in the current directory
           curl -sL "https://github.com/google/go-containerregistry/releases/download/${VERSION}/go-containerregistry_${OS}_${ARCH}.tar.gz" | tar -xzf -
-          echo "ls"
-          ls -l
-          # This directory is in PATH
-          mkdir -p $HOME/.local/bin
-          mv crane $HOME/.local/bin
         env:
           VERSION: v0.20.2
           OS: Linux
@@ -48,7 +42,7 @@ jobs:
       - name: Mirror
         run: |
           for tag in $(cat ./images/${{ matrix.image }}); do
-            crane copy \
+            ./crane copy \
               docker.io/${{ matrix.image }}:$tag \
               ghcr.io/${{ github.repository_owner }}/${{ matrix.image }}:$tag
           done
