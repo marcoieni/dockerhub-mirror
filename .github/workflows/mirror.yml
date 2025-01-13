@@ -42,6 +42,8 @@ jobs:
 
       - name: Mirror
         run: |
+          echo $PATH
+          ls -l $HOME/bin
           for tag in $(cat ./images/${{ matrix.image }}); do
             crane copy \
               docker.io/${{ matrix.image }}:$tag \
