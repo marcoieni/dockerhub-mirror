@@ -12,7 +12,7 @@ def crane_gh_release_url() -> str:
     os_name = "Linux"
     arch = "x86_64"
 
-    return f"https://github.com/google/go-containerregistry/releases/download/{version}/go-containerregistry_{os_name}_{arch}.tar.gz"
+    return f"https://github.com/google/go-containerregistry/releases/downoad/{version}/go-containerregistry_{os_name}_{arch}.tar.gz"
 
 
 def download_crane():
