@@ -2,8 +2,10 @@ import os
 import requests
 import tarfile
 import shutil
+import subprocess
 from io import BytesIO
 from tempfile import TemporaryDirectory
+
 
 def crane_gh_release_url() -> str:
     version = "v0.20.2"
@@ -14,8 +16,7 @@ def crane_gh_release_url() -> str:
 
 
 def download_crane():
-    """Download the crane executable from the GitHub releases in the current directory.
-    """
+    """Download the crane executable from the GitHub releases in the current directory."""
 
     try:
         # Download the GitHub release tar.gz file
@@ -45,11 +46,22 @@ def mirror_dockerhub():
     # Images from DockerHub that we want to mirror
     images = ["ubuntu:25.04"]
     for img in images:
-        # Mirror images from DockerHub to GHCR
-        command = (
-            f"./crane copy docker.io/{img} ghcr.io/${{ github.repository_owner }}/{img}"
-        )
-        os.system(command)
+        repo_owner = r"${{ github.repository_owner }}"
+        # Command to mirror images from DockerHub to GHCR
+        command = ["./crane", "copy", f"docker.io/{img}", f"ghcr.io/{repo_owner}/{img}"]
+        try:
+            subprocess.run(
+                command,
+                # if the process exits with a non-zero exit code, raise the CalledProcessError exception
+                check=True,
+                # open stdout and stderr in text mode
+                text=True,
+            )
+            print(f"Successfully mirrored {img}")
+        except subprocess.CalledProcessError as e:
+            print(f"Error mirroring {img}: {e}")
+            print(f"Command output: {e.stdout}")
+            print(f"Command error: {e.stderr}")
 
 
 if __name__ == "__main__":

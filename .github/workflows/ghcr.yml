@@ -25,3 +25,4 @@ jobs:
 
       - name: Mirror DockerHub
         run: python3 src/ci/github-actions/ghcr.py
+        shell: bash
