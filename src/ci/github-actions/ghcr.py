@@ -37,16 +37,16 @@ def download_crane():
         print("Successfully downloaded and extracted crane")
 
     except requests.RequestException as e:
-        print(f"Error downloading crane: {e}")
+        raise RuntimeError(f"Failed to download crane: {e}") from e
     except (tarfile.TarError, OSError) as e:
-        print(f"Error handling files: {e}")
+        raise RuntimeError(f"Failed to extract crane: {e}") from e
 
 
 def mirror_dockerhub():
     # Images from DockerHub that we want to mirror
     images = ["ubuntu:25.04"]
     for img in images:
-        repo_owner = r"${{ github.repository_owner }}"
+        repo_owner = "marcoieni"
         # Command to mirror images from DockerHub to GHCR
         command = ["./crane", "copy", f"docker.io/{img}", f"ghcr.io/{repo_owner}/{img}"]
         try:
@@ -59,9 +59,8 @@ def mirror_dockerhub():
             )
             print(f"Successfully mirrored {img}")
         except subprocess.CalledProcessError as e:
-            print(f"Error mirroring {img}: {e}")
-            print(f"Command output: {e.stdout}")
-            print(f"Command error: {e.stderr}")
+            raise RuntimeError(f"Failed to mirror {img}: {e}") from e
+    print("Successfully mirrored all images")
 
 
 if __name__ == "__main__":
