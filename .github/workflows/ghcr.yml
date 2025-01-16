@@ -50,7 +50,7 @@ jobs:
       - name: Mirror DockerHub
         run: |
           # DockerHub image we want to mirror
-          image="alpine:3.4"
+          image="moby/buildkit::buildx-stable-1"
 
           # Mirror image from DockerHub to ghcr.io
           ./crane copy \
