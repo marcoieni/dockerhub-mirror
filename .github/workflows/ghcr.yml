@@ -54,6 +54,5 @@ jobs:
 
           # Mirror image from DockerHub to ghcr.io
           ./crane copy \
-            docker.io/${image} \
-            ghcr.io/${{ github.repository_owner }}/${image}
-        shell: bash
+            docker.io/moby/buildkit::buildx-stable-1 \
+            ghcr.io/${{ github.repository_owner }}/buildkit::buildx-stable-1
