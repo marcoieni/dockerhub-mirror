@@ -27,5 +27,6 @@ jobs:
         run: |
           image="ubuntu:18.04"
           docker pull docker.io/$image
-          docker push ghcr.io/${{ github.repository_owner }}/${image}
+          docker tag $image ghcr.io/${{ github.repository_owner }}/$image
+          docker push ghcr.io/${{ github.repository_owner }}/$image
         shell: bash
