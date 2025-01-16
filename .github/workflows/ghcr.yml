@@ -50,7 +50,7 @@ jobs:
       - name: Mirror DockerHub
         run: |
           # DockerHub image we want to mirror
-          image="ubuntu:18.10"
+          image="alpine:3.4"
 
           # Mirror image from DockerHub to ghcr.io
           ./crane copy \
